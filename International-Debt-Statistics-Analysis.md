@@ -30,3 +30,22 @@ SELECT DISTINCT indicator_code AS distinct_debt_indicators
 FROM international_debt
 ORDER BY distinct_debt_indicators
 ```
+
+4. Calculate the amount of debt owed by the countries.
+```
+%%sql
+SELECT ROUND(SUM(debt)/1000000,2) AS total_debt
+FROM international_debt;
+```
+
+5. Find the country with the highest debt.
+```
+%%sql
+SELECT
+  country_name,
+  SUM(debt) AS total_debt
+FROM international_debt
+GROUP BY country_name
+ORDER BY total_debt DESC
+LIMIT 1;
+```
