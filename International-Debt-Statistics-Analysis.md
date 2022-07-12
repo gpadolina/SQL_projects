@@ -87,3 +87,15 @@ GROUP BY indicator_code
 ORDER BY indicator_count DESC, indicator_code DESC
 LIMIT 20;
 ```
+
+9. Find other viable debt issues.
+```
+%%sql
+SELECT
+  country_name,
+  MAX(debt) AS maximum_debt
+FROM international_debt
+GROUP BY country_name
+ORDER BY maximum_debt DESC
+LIMIT 10;
+```
