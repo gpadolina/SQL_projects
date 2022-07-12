@@ -12,5 +12,21 @@ categories. We are going to find the answers to questions like:
 %%sql
 postgresql:///international_debt
 SELECT *
-FROM international_de
+FROM international_debt
+LIMIT 10;
+```
+
+2. Find the number of distinct countries.
+```
+%%sql
+SELECT COUNT(DISTINCT country_name) AS total_distinct_countries
+FROM international_debt;
+```
+
+3. Find the distinct debt indicators.
+```
+%%sql
+SELECT DISTINCT indicator_code AS distinct_debt_indicators
+FROM international_debt
+ORDER BY distinct_debt_indicators
 ```
