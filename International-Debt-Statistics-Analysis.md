@@ -6,3 +6,11 @@ categories. We are going to find the answers to questions like:
 - What is the total amount of debt that is owed by the countries listed in the dataset?
 - Which country owns the maximum amount of debt and what does that amount look like?
 - What is the average amount of debt owed by countries across different debt indicators?
+
+1. Connect to international_debt database, select all columns from international_debt table, and limit the output.
+```
+%%sql
+postgresql:///international_debt
+SELECT *
+FROM international_de
+```
