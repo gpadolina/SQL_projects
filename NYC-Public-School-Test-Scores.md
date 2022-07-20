@@ -46,3 +46,42 @@ FROM schools
 WHERE average_math >= 640
 ORDER BY average_math DESC
 ```
+
+5. Lowest reading score.
+```
+%%sql
+
+-- Find lowest average_reading
+SELECT MIN(average_reading) AS lowest_reading
+FROM schools
+```
+
+6. Best writing school.
+```
+%%sql
+
+-- Find the top score for average_writing
+-- Group the results by school
+-- Sort by max_writing in descending order
+-- Reduce output to one school
+SELECT school_name, MAX(average_writing) AS max_writing
+FROM schools
+GROUP BY school_name
+ORDER BY max_writing DESC
+LIMIT 1;
+```
+
+7. Top 10 schools.
+```
+%%sql
+
+-- Calculate average_sat
+-- Group by school_name
+-- Sort by average_sat in descending order
+-- Display the top ten results
+SELECT school_name, SUM(average_math + average_reading + average_writing) AS average_sat
+FROM schools
+GROUP BY school_name
+ORDER BY average_sat DESC
+LIMIT 10;
+```
