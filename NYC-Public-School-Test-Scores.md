@@ -26,3 +26,23 @@ SELECT COUNT(*) - COUNT(percent_tested) AS num_tested_missing,
 COUNT(school_name) AS num_schools
 FROM schools
 ```
+
+3. Find number of unique schools by building code.
+```
+-- Count the number of unique building_code values
+SELECT COUNT(DISTINCT building_code) AS num_school_buildings
+FROM schools
+```
+
+4. Best schools for math.
+```
+%%sql
+
+-- Select school and average_math
+-- Filter for average_math 640 or higher
+-- Display from largest to smallest average_math
+SELECT school_name, average_math
+FROM schools
+WHERE average_math >= 640
+ORDER BY average_math DESC
+```
