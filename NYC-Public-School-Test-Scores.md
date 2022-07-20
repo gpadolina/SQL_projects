@@ -85,3 +85,33 @@ GROUP BY school_name
 ORDER BY average_sat DESC
 LIMIT 10;
 ```
+
+8. Ranking boroughs.
+```
+%%sql
+
+-- Select borough and a count of all schools, aliased as num_schools
+-- Calculate the sum of average_math, average_reading, and average_writing, divided by a count of all schools, aliased as average_borough_sat
+-- Organize results by borough
+-- Display by average_borough_sat in descending order
+SELECT borough, COUNT(school_name) AS num_schools, SUM(average_math + average_reading + average_writing)/COUNT(school_name) AS average_borough_sat
+FROM schools
+GROUP BY borough
+ORDER BY average_borough_sat DESC
+```
+
+9. Top 5 schools for math in Brooklyn.
+```
+%%sql
+
+-- Select school and math score
+-- Filter for schools in Brooklyn
+-- Aggregate on school_name
+-- Display results from highest average_math and restrict output to five rows
+SELECT school_name, average_math
+FROM schools
+WHERE borough = 'Brooklyn'
+GROUP BY school_name
+ORDER BY average_math DESC
+LIMIT 5
+```
