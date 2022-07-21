@@ -33,3 +33,32 @@ FROM businesses
 WHERE year_founded < 1000
 ORDER BY year_founded ASC
 ```
+
+4. Exploring the categories.
+```
+%%sql
+
+-- Select business name, founding year, and country code from businesses; and category from categories
+-- where the founding year was before 1000, arranged from oldest to newest
+SELECT b.business, b.year_founded, b.country_code, c.category
+FROM businesses b
+JOIN categories c
+ON b.category_code = c.category_code
+WHERE b.year_founded < 1000
+ORDER BY b.year_founded ASC
+```
+
+5. Counting the categories.
+```
+%%sql
+
+-- Select the category and count of category (as "n")
+-- arranged by descending count, limited to 10 most common categories
+SELECT category, COUNT(category) AS n
+FROM categories
+JOIN businesses
+USING(category_code)
+GROUP BY category
+ORDER BY n DESC
+LIMIT 10;
+```
