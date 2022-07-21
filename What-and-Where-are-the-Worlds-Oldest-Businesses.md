@@ -90,3 +90,32 @@ USING(category_code)
 INNER JOIN countries
 USING(country_code);
 ```
+
+8. Counting categories by continent.
+```
+%%sql
+
+-- Count the number of businesses in each continent and category
+SELECT continent, category, COUNT(business) AS n
+FROM businesses
+JOIN categories
+USING(category_code)
+JOIN countries
+USING(country_code)
+GROUP BY continent
+```
+
+9. Filter counts by continent and category.
+```
+%%sql
+
+-- Count the number of businesses in each continent and category
+SELECT continent, category, COUNT(business) AS n
+FROM businesses
+JOIN categories
+USING(category_code)
+JOIN countries
+USING(country_code)
+GROUP BY continent
+HAVING COUNT(business) > 5
+```
