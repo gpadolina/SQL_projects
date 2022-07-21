@@ -62,3 +62,31 @@ GROUP BY category
 ORDER BY n DESC
 LIMIT 10;
 ```
+
+6. Oldest business by continent.
+```
+%%sql
+
+-- Select the oldest founding year (as "oldest") from businesses, 
+-- and continent from countries
+-- for each continent, ordered from oldest to newest 
+SELECT MIN(year_founded) AS oldest, continent
+FROM countries c
+JOIN businesses b
+USING(country_code)
+GROUP BY continent
+ORDER BY oldest ASC
+```
+
+7. Joining all tables for further analysis.
+```
+%%sql
+
+-- Select the business, founding year, category, country, and continent
+SELECT business, year_founded, category, country, continent
+FROM businesses
+JOIN categories
+USING(category_code)
+INNER JOIN countries
+USING(country_code);
+```
