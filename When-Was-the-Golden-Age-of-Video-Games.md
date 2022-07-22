@@ -47,3 +47,50 @@ GROUP BY g.year
 ORDER BY avg_critic_score DESC
 LIMIT 10;
 ```
+
+4. 1982.
+```
+%%sql 
+
+-- Paste your query from the previous task; update it to add a count of games released in each year called num_games
+-- Update the query so that it only returns years that have more than four reviewed games
+SELECT g.year, ROUND(AVG(r.critic_score),2) AS avg_critic_score, COUNT(r.game) AS num_games
+FROM reviews r
+LEFT JOIN game_sales g
+ON g.game = r.game
+GROUP BY g.year
+HAVING COUNT(r.game) > 4
+ORDER BY avg_critic_score DESC
+LIMIT 10;
+```
+
+5. Years that dropped off the critics' favorite list.
+```
+%%sql 
+
+-- Select the year and avg_critic_score for those years that dropped off the list of critic favorites 
+-- Order the results from highest to lowest avg_critic_score
+SELECT year, avg_critic_score
+FROM top_critic_years
+EXCEPT
+SELECT year, avg_critic_score
+FROM top_critic_years_more_than_four_games
+ORDER BY avg_critic_score DESC;
+```
+
+6. Years video game players loved.
+```
+%%sql 
+
+-- Select year, an average of user_score, and a count of games released in a given year, aliased and rounded
+-- Include only years with more than four reviewed games; group data by year
+-- Order data by avg_user_score, and limit to ten results
+SELECT g.year, ROUND(AVG(r.user_score),2) AS avg_user_score, COUNT(r.game) AS num_games
+FROM reviews r
+LEFT JOIN game_sales g
+ON g.game = r.game
+GROUP BY g.year
+HAVING COUNT(r.game) > 4
+ORDER BY avg_user_score DESC
+LIMIT 10;
+```
