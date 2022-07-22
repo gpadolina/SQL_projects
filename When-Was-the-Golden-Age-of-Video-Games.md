@@ -94,3 +94,30 @@ HAVING COUNT(r.game) > 4
 ORDER BY avg_user_score DESC
 LIMIT 10;
 ```
+
+7. Years that both players and critics loved.
+```
+%%sql 
+
+-- Select the year results that appear on both tables
+SELECT c.year
+FROM top_critic_years_more_than_four_games c
+INNER JOIN top_user_years_more_than_four_games u
+ON u.year = c.year
+```
+
+8. Sales in the best video game years.
+```
+%%sql 
+
+-- Select year and sum of games_sold, aliased as total_games_sold; order results by total_games_sold descending
+-- Filter game_sales based on whether each year is in the list returned in the previous task
+SELECT year, SUM(games_sold) AS total_games_sold
+FROM game_sales
+WHERE year IN (SELECT c.year
+FROM top_critic_years_more_than_four_games c
+INNER JOIN top_user_years_more_than_four_games u
+ON u.year = c.year)
+GROUP BY year
+ORDER BY total_games_sold DESC
+```
