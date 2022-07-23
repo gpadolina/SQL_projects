@@ -49,3 +49,30 @@ WHERE sex = 'F'
 GROUP BY first_name
 LIMIT 10;
 ```
+
+4. Picking a baby name.
+```
+%%sql
+-- Select only the first_name column
+-- Filter for results where sex is 'F', year is greater than 2015, and first_name ends in 'a'
+-- Group by first_name and order by the total number of babies given that first_name
+SELECT first_name
+FROM baby_names
+WHERE sex = 'F' AND year > 2015 AND first_name LIKE '%a'
+GROUP BY first_name
+ORDER BY SUM(num) DESC;
+```
+
+5. The Olivia expansion.
+```
+%%sql
+
+-- Select year, first_name, num of Olivias in that year, and cumulative_olivias
+-- Sum the cumulative babies who have been named Olivia up to that year; alias as cumulative_olivias
+-- Filter so that only data for the name Olivia is returned.
+-- Order by year from the earliest year to most recent
+SELECT year, first_name, num, SUM(num) OVER (ORDER BY year) AS cumulative_olivias
+FROM baby_names
+WHERE first_name = 'Olivia'
+ORDER BY year;
+```
