@@ -76,3 +76,58 @@ FROM baby_names
 WHERE first_name = 'Olivia'
 ORDER BY year;
 ```
+
+6. Many males with the same name.
+```
+%%sql
+
+-- Select year and maximum number of babies given any one male name in that year, aliased as max_num
+-- Filter the data to include only results where sex equals 'M'
+SELECT year, MAX(num) AS max_num
+FROM baby_names
+WHERE sex = 'M'
+GROUP BY year;
+```
+
+7. Top male names over the years.
+```
+%%sql
+
+-- Select year, first_name given to the largest number of male babies, and num of babies given that name
+-- Join baby_names to the code in the last task as a subquery
+-- Order results by year descending
+SELECT b.year, b.first_name, b.num
+FROM baby_names b
+INNER JOIN (
+    SELECT year, MAX(num) as max_num
+    FROM baby_names
+    WHERE sex = 'M'
+    GROUP BY year) s 
+ON s.year = b.year AND s.max_num = b.num
+ORDER BY year DESC;
+```
+
+8. The most years at number one.
+```
+%%sql
+
+-- Select first_name and a count of years it was the top name in the last task; alias as count_top_name
+-- Use the code from the previous task as a common table expression
+-- Group by first_name and order by count_top_name descending
+WITH top_male_names AS (
+    SELECT b.year, b.first_name, b.num
+    FROM baby_names b
+    INNER JOIN (
+        SELECT year, MAX(num) num
+        FROM baby_names
+        WHERE sex = 'M'
+        GROUP BY year) s 
+    ON s.year = b.year 
+        AND s.num = b.num
+    ORDER BY YEAR DESC
+    )
+SELECT first_name, COUNT(first_name) as count_top_name
+FROM top_male_names
+GROUP BY first_name
+ORDER BY COUNT(first_name) DESC;
+```
