@@ -107,3 +107,25 @@ WHERE i.description IS NOT NULL
 GROUP BY description_length
 ORDER BY description_length;
 ```
+
+7. As we know a correlation exists between reviews and revenue, one approach the company could take is to run experiments with different sales processes encouraging more reviews from customers about their purchases, such as by offering a small discount on future purchases.
+
+Let's take a look at the volume of reviews by month to see if there are any trends or gaps we can look to exploit.
+```
+%%sql
+
+-- Select brand, month from last_visited, and a count of all products in reviews aliased as num_reviews
+-- Join traffic with reviews and brands on product_id
+-- Group by brand and month, filtering out missing values for brand and month
+-- Order the results by brand and month
+SELECT b.brand, DATE_PART('month', t.last_visited) AS month, COUNT(r.*) AS num_reviews
+FROM brands b
+INNER JOIN traffic t 
+    ON b.product_id = t.product_id
+INNER JOIN reviews r 
+    ON t.product_id = r.product_id
+GROUP BY b.brand, month
+HAVING b.brand IS NOT NULL
+    AND DATE_PART('month', t.last_visited) IS NOT NULL
+ORDER BY b.brand, month;
+```
