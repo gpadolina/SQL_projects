@@ -60,3 +60,50 @@ GROUP BY b.brand, price_category
 HAVING b.brand IS NOT NULL
 ORDER BY total_revenue DESC;
 ```
+
+4. Note we have been looking at listing_price so far. The listing_price may not be the price that the product is ultimately sold for. To understand revenue better, let's take a look at the discount, which is the percent reduction in the listing_price when the product is actually sold. We would like to know whether there is a difference in the amount of discount offered between brands, as this could be influencing revenue.
+```
+%%sql
+
+-- Select brand and average_discount as a percentage
+-- Join brands to finance on product_id
+-- Aggregate by brand
+-- Filter for products without missing values for brand
+SELECT b.brand, AVG(f.discount) * 100 AS average_discount
+FROM brands b
+INNER JOIN finance f 
+    ON b.product_id = f.product_id
+GROUP BY b.brand
+HAVING b.brand IS NOT NULL
+ORDER BY average_discount;
+```
+
+5. Now explore whether relationships exist between the columns in our database. We will check the strength and direction of a correlation between revenue and reviews.
+```
+%%sql
+
+-- Calculate the correlation between reviews and revenue as review_revenue_corr
+-- Join the reviews and finance tables on product_id
+SELECT corr(r.reviews, f.revenue) AS review_revenue_corr
+FROM reviews r
+INNER JOIN finance f 
+    ON r.product_id = f.product_id;
+```
+
+6. Perhaps the length of a product's description might influence a product's rating and reviews — if so, the company can produce content guidelines for listing products on their website and test if this influences revenue. Let's check this out!
+```
+%%sql
+
+-- Calculate description_length
+-- Convert rating to an integer and calculate average_rating
+-- Join info to reviews on product_id and group the results by description_length
+-- Filter for products without missing values for description, and sort results by description_length
+SELECT TRUNC(LENGTH(i.description), -2) AS description_length,
+    ROUND(AVG(r.rating::numeric), 2) AS average_rating
+FROM info i
+INNER JOIN reviews r 
+    ON i.product_id = r.product_id
+WHERE i.description IS NOT NULL
+GROUP BY description_length
+ORDER BY description_length;
+```
