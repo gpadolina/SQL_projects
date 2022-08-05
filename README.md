@@ -5,3 +5,4 @@
 3. [What and Where are the World's Oldest Businesses.](https://github.com/gpadolina/SQL-Projects/blob/main/What-and-Where-are-the-Worlds-Oldest-Businesses.md)
 4. [When Was the Golden Age of Video Games?](https://github.com/gpadolina/SQL-Projects/blob/main/When-Was-the-Golden-Age-of-Video-Games.md)
 5. [American Baby Names Trend.](https://github.com/gpadolina/SQL-Projects/blob/main/American-Baby-Names-Trend.md)
+6. [Optimizing Online Sport Retail Revenue.](https://github.com/gpadolina/SQL-Projects/blob/main/Optimizing-Online-Sports-Retail-Revenue.md)
