@@ -39,3 +39,24 @@ GROUP BY b.brand, f.listing_price
 HAVING listing_price > 0
 ORDER BY listing_price DESC;
 ```
+
+3. Let's build on our previous query by assigning labels to different price ranges, grouping by brand and label. We will also include the total revenue for each price range and brand.
+```
+%%sql
+
+-- Select the brand, a count of all products in the finance table, and total revenue
+-- Create four labels for products based on their price range, aliasing as price_category
+-- Join brands to finance on product_id
+-- Group results by brand and price_category, sort by total_revenue and filter out products missing a value for brand
+SELECT b.brand, COUNT(f.*), SUM(f.revenue) as total_revenue,
+CASE WHEN f.listing_price < 42 THEN 'Budget'
+    WHEN f.listing_price >= 42 AND f.listing_price < 74 THEN 'Average'
+    WHEN f.listing_price >= 74 AND f.listing_price < 129 THEN 'Expensive'
+    ELSE 'Elite' END AS price_category
+FROM finance f
+INNER JOIN brands b 
+    ON f.product_id = b.product_id
+GROUP BY b.brand, price_category
+HAVING b.brand IS NOT NULL
+ORDER BY total_revenue DESC;
+```
